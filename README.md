@@ -1,5 +1,11 @@
 # The Case of the Silent Sliders — Spotify Retention Investigation
 
+
+## 🚀 Live Dashboard
+
+**Streamlit App:** https://hqpcqrbk4jwvadkockm8fz.streamlit.app/
+
+
 A 9-page Streamlit app investigating Spotify retention using `pandas` +
 `plotly.express` only — no SQL, no HTML/CSS injection, no interview-prep
 filler. Built with `st.navigation` / `st.Page` (Streamlit ≥ 1.36).
