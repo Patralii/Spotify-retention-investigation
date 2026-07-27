@@ -3,7 +3,7 @@
 
 ## 🚀 Live App
 
-**Streamlit App:** Run locally with `streamlit run app.py`
+**Streamlit App:** https://hqpcqrbk4jwvadkockm8fz.streamlit.app/
 
 > **Project type:** Churn Driver Investigation + Behavioral Segment Analysis
 > **Analyst:** Patrali Mondal
