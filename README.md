@@ -10,18 +10,16 @@
 > **Dataset:** 100,000 users · 3 source tables · Single retention snapshot (Jun 2026)
 > **Method:** Hypothesis-driven EDA · Chi-square testing · Logistic Regression · Decile Analysis
 
----
 
 ## The One-Sentence Finding
 
 Listening volume is a **misleading retention metric** — churned users listen **75% more hours per day** than retained users, yet skip twice as often and make zero playlist adds, concentrating **26.8% platform churn** almost entirely in one segment: established Premium subscribers who stopped curating.
 
----
 
 ## The Narrative (9 Acts)
 
 | Act | Page | What Happens |
-|-----|------|-------------|
+|--||-|
 | I   | Executive Summary | Baseline churn is 26.8%. Three segments sit near 15%. One sits at 47.4%. The investigation begins. |
 | II  | Investigation Design | North star locked: `retained_30_days`. Metric tree built across demographic, listening, and curation branches before a single chart is drawn. |
 | III | Process of Elimination | Geography tested and eliminated (p = 0.61). Subscription type looks like an answer — until tenure is introduced as a second dimension. |
@@ -32,7 +30,7 @@ Listening volume is a **misleading retention metric** — churned users listen *
 | VIII| The Human Cost | Three real user profiles from the dataset — a 10-year churned Premium user, a 6-week retained Free user, a mid-tenure user the zero-adds rule would have missed. |
 | IX  | Recommendation | A Lapsed Curation Alert: zero playlist adds as the primary trigger, top-decile skip rate as a secondary tripwire. Validated with a 50/50 A/B test before full rollout. |
 
----
+
 
 ## How to Run
 
@@ -61,12 +59,12 @@ streamlit run app.py
 
 Navigate to `localhost:8501`. The app loads, cleans, and caches all data on first run. Every subsequent page click is instant.
 
----
+
 
 ## The Four Risk Segments
 
 | Segment | Users | Churn Rate | Avg Skip Rate | Avg Playlist Adds | Priority |
-|---------|-------|-----------|---------------|-------------------|----------|
+||-|--||-|-|
 | New, Free/Family | 19,227 (19.2%) | 10.9% | 26.6% | 3.56 | Low |
 | New, Premium | 13,007 (13.0%) | 11.7% | 26.8% | 3.53 | Watch |
 | Established, Free/Family | 40,009 (40.0%) | 24.8% | 29.9% | 3.33 | Monitor |
@@ -74,12 +72,12 @@ Navigate to `localhost:8501`. The app loads, cleans, and caches all data on firs
 
 Established Premium subscribers churn at **47.7%** — nearly 3× the platform average — despite listening the most hours per day. They hold **93% of all disengaged users** in the dataset.
 
----
+
 
 ## The Key Numbers
 
 | Metric | Value |
-|--------|-------|
+|--|-|
 | Total users | 100,000 |
 | Overall churn rate | 26.8% |
 | Overall retention rate | 73.2% |
@@ -96,7 +94,7 @@ Established Premium subscribers churn at **47.7%** — nearly 3× the platform a
 | Churned avg skip rate | 47.3% |
 | Retained avg skip rate | 24.0% |
 
----
+
 
 ## Key Technical Decisions
 
@@ -121,14 +119,14 @@ Skip rate is measured in percentages (0–100). Account age is measured in days 
 **Why propose an A/B test rather than immediately shipping the Lapsed Curation Alert?**
 `playlist_adds_last_30d` and `retained_30_days` both describe the same trailing 30-day window. A user who decided to leave at the start of the month would naturally stop curating and not be retained in that same month — both are effects of the same underlying disengagement, not cause and effect. Observational data alone cannot determine whether zero playlist adds is a leading indicator (giving advance warning before the churn decision) or a lagging indicator (confirming a decision already made). Only a randomized experiment — 50% of flagged users receive the intervention, 50% do not — can resolve this.
 
----
+
 
 ## The Engagement Paradox
 
 The most counterintuitive finding in the project, and the most important.
 
 | Behavior | Retained Users | Churned Users |
-|----------|---------------|---------------|
+|-|||
 | Avg daily listening hours | 2.30 hrs | **4.03 hrs** |
 | Avg skip rate | 24.0% | **47.3%** |
 | Avg playlist adds (30d) | 3.98 | **1.29** |
@@ -138,14 +136,14 @@ Churned users listen 75% more per day than retained users. A product dashboard t
 
 The distinction is passive consumption vs intentional engagement. Churned users accept whatever the algorithm plays and skip most of it. Retained users search for artists they want, build playlists over time, and make the platform feel like theirs. Volume is not loyalty. Curation is.
 
----
+
 
 ## Data Quality Issues in the Raw Files
 
 The dataset was generated with realistic data quality problems — the same categories that appear in real production exports.
 
 | Issue | Count | Fix Applied |
-|-------|-------|-------------|
+|-|-|-|
 | `account_age_days` missing | 4,519 rows | Recomputed from `signup_date` for all 100,000 rows |
 | `account_age_days` inconsistent with `signup_date` | ~1,500 rows | Overwritten by recomputation |
 | `skip_rate_pct` outside [0, 100] | 500 rows | Clipped to valid range |
@@ -157,11 +155,11 @@ The dataset was generated with realistic data quality problems — the same cate
 
 All cleaning decisions are documented in `utils/data_loader.py` with inline comments explaining each choice. Nothing is cleaned silently.
 
----
+
 
 **Total:** 1,111 lines of Python across 13 files.
 
----
+
 
 ## Skills Demonstrated
 
@@ -175,7 +173,7 @@ All cleaning decisions are documented in `utils/data_loader.py` with inline comm
 
 **Tools:** Python · Pandas · NumPy · SciPy · scikit-learn · Plotly · Streamlit · Google Colab
 
----
+
 
 ## Recruiter Signal
 
@@ -183,6 +181,6 @@ This project demonstrates **subscription product retention thinking** — not ju
 
 The Lapsed Curation Alert is a product feature, not just a dashboard finding. The A/B test design is a recognition that correlation in observational data is not a mandate to act — it is a hypothesis to test. The segment-specific targeting is a resource allocation argument: spend the retention budget where 93% of the problem actually lives, not spread it across the 77% of users who were never meaningfully at risk.
 
----
+
 
 *Built by Patrali Mondal · Data Analyst · Product Analytics Portfolio · Google Data Analytics Apprenticeship Application*
